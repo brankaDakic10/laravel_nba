@@ -26,3 +26,6 @@ Route::get('/login', 'LoginController@create')->name('login');
 Route::post('/login', 'LoginController@store')->name('login-store');
 //logout
 Route::get('/logout', 'LoginController@logout')->name('logout');
+
+// store comment
+Route::post('/teams/{team_id}/comments','CommentsController@store')->name('comments-team');

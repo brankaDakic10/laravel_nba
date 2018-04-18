@@ -6,6 +6,7 @@
           <a class="nav-link" href="#">Press</a>
           <a class="nav-link" href="#">New hires</a>
           <a class="nav-link" href="#">About</a>
+         
         </nav>
       </div>
     </div>
@@ -13,7 +14,7 @@
     <div class="blog-header">
       <div class="container">
         <h1 class="blog-title">NBA</h1> 
- @if(Auth::check())
+        @if(Auth::check())
         <div>{{Auth()->user()->name}}</div>
         <a href="/logout">Logout</a>
         @else
