@@ -1,10 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerificationUser;
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 // added
 use App\User;
+
+
 class RegisterController extends Controller
 {
     // added
@@ -18,7 +21,7 @@ class RegisterController extends Controller
     {
      return view('register.register-create');
     }
-    public function store()
+    public function store(Request $request)
     {
         $this->validate(request(),[
             'name' => 'required|min:3|max:50',
@@ -29,13 +32,18 @@ class RegisterController extends Controller
         ]);
         // User::create(request()->all())
         $user=new User();
-        $user->name=request('name');
-        $user->email=request('email'); 
-        $user->password=bcrypt(request('password'));
+        $user->name= request('name');
+        $user->email= request('email'); 
+        $user->password= bcrypt(request('password'));
+        $user->is_verified= false;
       
         $user->save();
+        // save 
         auth()->login($user);
-        return redirect()->route('all-teams');
+    
+          //   posalji user-u na njegov email //
+     Mail::to($request->email)->send(new VerificationUser($user));
+        return redirect()->route('login');
     }
     
 }

@@ -10,6 +10,12 @@ use App\Comment;
 
 class CommentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('comment-words')->only('store');
+    }
+
+
 
     // save comment
     public function store(Request $request,$team_id){
